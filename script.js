@@ -1,178 +1,99 @@
-/* ════════════════════════════════════════════
-   PORTFOLIO — script.js
+/* ═══════════════════════════════════════════════════════════════
+   BENTO GRID STUDIO — script.js
    Muhammad Azhar Firdaus | Web Developer
-════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 
-/* ── 1. NAVBAR: scroll behaviour & mobile menu ── */
-const navbar    = document.getElementById('navbar');
-const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
+/* ── 1. MOBILE NAV TOGGLE ── */
+const navToggle = document.getElementById('navToggle');
+const navMenu   = document.getElementById('navMenu');
+
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+  });
+
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navMenu.classList.remove('open'));
+  });
+}
+
+/* ── 2. ACTIVE NAV LINK OBSERVER ── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-menu a:not(.nav-btn)');
 
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-  document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
-});
-
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-});
-
-// Close mobile menu when a link is clicked
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => navLinks.classList.remove('open'));
-});
-
-/* ── 2. ACTIVE NAV LINK on scroll ── */
-const sections = document.querySelectorAll('section[id]');
-const navAnchs = document.querySelectorAll('.nav-links a:not(.nav-cta)');
-
-const observeNav = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navAnchs.forEach(a => a.classList.remove('active'));
-      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-      if (active) active.classList.add('active');
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 120;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute('id');
     }
   });
-}, { threshold: 0.35 });
 
-sections.forEach(s => observeNav.observe(s));
-
-/* ── 3. SCROLL REVEAL ── */
-const revealEls = [];
-
-function addReveal(selector, delay = 0) {
-  document.querySelectorAll(selector).forEach((el, i) => {
-    el.classList.add('reveal');
-    el.style.transitionDelay = `${delay + i * 70}ms`;
-    revealEls.push(el);
-  });
-}
-
-addReveal('.stat-card',        0);
-addReveal('.skill-category',   0);
-addReveal('.project-card',     0);
-addReveal('.timeline-item',    0);
-addReveal('.testimonial-card', 0);
-addReveal('.about-card-box',   0);
-addReveal('.contact-info',     0);
-addReveal('.contact-form',     0);
-
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
     }
-  });
-}, { threshold: 0.1 });
-
-revealEls.forEach(el => revealObserver.observe(el));
-
-/* ── 4. SKILL BARS ANIMATION ── */
-const skillFills = document.querySelectorAll('.skill-fill');
-const skillObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.width = entry.target.dataset.width + '%';
-      skillObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.25 });
-
-skillFills.forEach(el => skillObserver.observe(el));
-
-/* ── 5. PROJECT FILTER ── */
-const filterBtns   = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card');
-
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const filter = btn.dataset.filter;
-    projectCards.forEach(card => {
-      const match = filter === 'all' || card.dataset.category === filter;
-      card.classList.toggle('hidden', !match);
-      if (match) {
-        setTimeout(() => card.classList.add('visible'), 10);
-      }
-    });
   });
 });
 
-/* ── 6. CONTACT FORM — EmailJS ── */
-const EMAILJS_SERVICE_ID  = 'service_w4oenmu';
-const EMAILJS_TEMPLATE_ID = 'template_92hr3bk';
+/* ── 3. TYPING EFFECT FOR HERO ROLE ── */
+const roles = [
+  'Web Developer',
+  'Frontend Engineer',
+  'Clean Code Enthusiast',
+  'Fullstack Explorer'
+];
+const typingEl = document.getElementById('typingRole');
+let roleIdx = 0, charIdx = 0, isDeleting = false;
 
-function handleSubmit(e) {
-  e.preventDefault();
-  const form     = e.target;
-  const statusEl = document.getElementById('formStatus');
-  const btn      = form.querySelector('button[type="submit"]');
+function typeRoleLoop() {
+  if (!typingEl) return;
+  const currentRole = roles[roleIdx];
 
-  btn.disabled    = true;
-  btn.innerHTML   = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-  statusEl.className   = 'form-status';
-  statusEl.textContent = '';
-
-  const params = {
-    from_name : form.name.value,
-    from_email: form.email.value,
-    subject   : form.subject.value,
-    message   : form.message.value,
-    to_email  : 'azharxbd@gmail.com',
-  };
-
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
-    .then(() => {
-      statusEl.className   = 'form-status success';
-      statusEl.textContent = '✅ Pesan berhasil dikirim! Saya akan segera menghubungi Anda.';
-      form.reset();
-    })
-    .catch((err) => {
-      console.error('EmailJS error:', err);
-      statusEl.className   = 'form-status error';
-      statusEl.textContent = '❌ Gagal mengirim pesan. Silakan kontak langsung via email/WhatsApp.';
-    })
-    .finally(() => {
-      btn.disabled  = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan Sekarang';
-      setTimeout(() => { statusEl.textContent = ''; }, 6000);
-    });
-}
-
-/* ── 7. BACK TO TOP ── */
-document.getElementById('backToTop').addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-/* ── 8. TYPING EFFECT FOR HERO TITLE ── */
-const titles = ['Web Developer', 'Frontend Engineer', 'UI/UX Craftsman', 'Creative Problem Solver'];
-const typingTarget = document.querySelector('.typing-target');
-let tIdx = 0, cIdx = 0, deleting = false;
-
-function typeLoop() {
-  if (!typingTarget) return;
-  const current = titles[tIdx];
-  if (!deleting) {
-    typingTarget.textContent = current.slice(0, ++cIdx);
-    if (cIdx === current.length) {
-      deleting = true;
-      setTimeout(typeLoop, 2000);
+  if (!isDeleting) {
+    typingEl.textContent = currentRole.slice(0, ++charIdx);
+    if (charIdx === currentRole.length) {
+      isDeleting = true;
+      setTimeout(typeRoleLoop, 2200);
       return;
     }
   } else {
-    typingTarget.textContent = current.slice(0, --cIdx);
-    if (cIdx === 0) {
-      deleting = false;
-      tIdx = (tIdx + 1) % titles.length;
+    typingEl.textContent = currentRole.slice(0, --charIdx);
+    if (charIdx === 0) {
+      isDeleting = false;
+      roleIdx = (roleIdx + 1) % roles.length;
     }
   }
-  setTimeout(typeLoop, deleting ? 50 : 85);
+  setTimeout(typeRoleLoop, isDeleting ? 45 : 80);
 }
 
-if (typingTarget) {
-  setTimeout(typeLoop, 600);
+if (typingEl) {
+  setTimeout(typeRoleLoop, 500);
+}
+
+/* ── 4. BULLETPROOF DIRECT WHATSAPP SUBMIT ── */
+function handleDirectSubmit(e) {
+  e.preventDefault();
+
+  const name    = document.getElementById('senderName').value.trim();
+  const email   = document.getElementById('senderEmail').value.trim();
+  const subject = document.getElementById('senderSubject').value.trim();
+  const message = document.getElementById('senderMessage').value.trim();
+
+  // Format a clean, professional WhatsApp template
+  const textMessage = 
+    `Halo Azhar, saya *${name}* (${email}).\n\n` +
+    `*Subjek:* ${subject}\n\n` +
+    `*Pesan:* \n${message}\n\n` +
+    `_Dikirim melalui formulir portofolio azharpemula.github.io_`;
+
+  const waUrl = `https://wa.me/6281287372759?text=${encodeURIComponent(textMessage)}`;
+
+  // Open direct WhatsApp chat
+  window.open(waUrl, '_blank');
+
+  // Also reset form
+  e.target.reset();
 }
