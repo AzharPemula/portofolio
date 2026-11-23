@@ -34,7 +34,7 @@ const observeNav = new IntersectionObserver(entries => {
       if (active) active.classList.add('active');
     }
   });
-}, { threshold: 0.4 });
+}, { threshold: 0.35 });
 
 sections.forEach(s => observeNav.observe(s));
 
@@ -44,19 +44,19 @@ const revealEls = [];
 function addReveal(selector, delay = 0) {
   document.querySelectorAll(selector).forEach((el, i) => {
     el.classList.add('reveal');
-    el.style.transitionDelay = `${delay + i * 80}ms`;
+    el.style.transitionDelay = `${delay + i * 70}ms`;
     revealEls.push(el);
   });
 }
 
-addReveal('.stat-card',      0);
-addReveal('.skill-category', 0);
-addReveal('.project-card',   0);
-addReveal('.timeline-item',  0);
+addReveal('.stat-card',        0);
+addReveal('.skill-category',   0);
+addReveal('.project-card',     0);
+addReveal('.timeline-item',    0);
 addReveal('.testimonial-card', 0);
-addReveal('.about-text',     0);
-addReveal('.contact-info',   0);
-addReveal('.contact-form',   0);
+addReveal('.about-card-box',   0);
+addReveal('.contact-info',     0);
+addReveal('.contact-form',     0);
 
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -65,7 +65,7 @@ const revealObserver = new IntersectionObserver(entries => {
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 
 revealEls.forEach(el => revealObserver.observe(el));
 
@@ -78,7 +78,7 @@ const skillObserver = new IntersectionObserver(entries => {
       skillObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.3 });
+}, { threshold: 0.25 });
 
 skillFills.forEach(el => skillObserver.observe(el));
 
@@ -95,7 +95,6 @@ filterBtns.forEach(btn => {
     projectCards.forEach(card => {
       const match = filter === 'all' || card.dataset.category === filter;
       card.classList.toggle('hidden', !match);
-      // re-trigger reveal
       if (match) {
         setTimeout(() => card.classList.add('visible'), 10);
       }
@@ -104,18 +103,8 @@ filterBtns.forEach(btn => {
 });
 
 /* ── 6. CONTACT FORM — EmailJS ── */
-// ════════════════════════════════════════════════════
-// SETUP: Buat akun di https://www.emailjs.com (gratis)
-//  1. Buat Email Service (Gmail dsb) → catat SERVICE_ID
-//  2. Buat Email Template → catat TEMPLATE_ID
-//     Template variables: {{from_name}}, {{from_email}},
-//                         {{subject}}, {{message}}
-//  3. Salin Public Key dari Account → Settings
-//  4. Ganti ketiga nilai di bawah + di <head> index.html
-// ════════════════════════════════════════════════════
 const EMAILJS_SERVICE_ID  = 'service_w4oenmu';
 const EMAILJS_TEMPLATE_ID = 'template_92hr3bk';
-// Public key sudah di-init di <head> index.html
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -145,11 +134,11 @@ function handleSubmit(e) {
     .catch((err) => {
       console.error('EmailJS error:', err);
       statusEl.className   = 'form-status error';
-      statusEl.textContent = '❌ Gagal mengirim pesan. Silakan hubungi langsung via email.';
+      statusEl.textContent = '❌ Gagal mengirim pesan. Silakan kontak langsung via email/WhatsApp.';
     })
     .finally(() => {
       btn.disabled  = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan';
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Pesan Sekarang';
       setTimeout(() => { statusEl.textContent = ''; }, 6000);
     });
 }
@@ -159,37 +148,31 @@ document.getElementById('backToTop').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-/* ── 8. TYPING EFFECT for hero title ── */
-const titles  = ['Web Developer', 'Web Designer', 'Frontend Developer', 'Problem Solver'];
-const titleEl = document.querySelector('.hero-title');
-let   tIdx = 0, cIdx = 0, deleting = false;
+/* ── 8. TYPING EFFECT FOR HERO TITLE ── */
+const titles = ['Web Developer', 'Frontend Engineer', 'UI/UX Craftsman', 'Creative Problem Solver'];
+const typingTarget = document.querySelector('.typing-target');
+let tIdx = 0, cIdx = 0, deleting = false;
 
 function typeLoop() {
+  if (!typingTarget) return;
   const current = titles[tIdx];
   if (!deleting) {
-    titleEl.firstChild.textContent = current.slice(0, ++cIdx);
+    typingTarget.textContent = current.slice(0, ++cIdx);
     if (cIdx === current.length) {
       deleting = true;
-      setTimeout(typeLoop, 1800);
+      setTimeout(typeLoop, 2000);
       return;
     }
   } else {
-    titleEl.firstChild.textContent = current.slice(0, --cIdx);
+    typingTarget.textContent = current.slice(0, --cIdx);
     if (cIdx === 0) {
       deleting = false;
       tIdx = (tIdx + 1) % titles.length;
     }
   }
-  setTimeout(typeLoop, deleting ? 60 : 90);
+  setTimeout(typeLoop, deleting ? 50 : 85);
 }
 
-// wrap text node for typing
-if (titleEl) {
-  titleEl.innerHTML = '<span></span><span class="cursor">|</span>';
-  setTimeout(typeLoop, 800);
+if (typingTarget) {
+  setTimeout(typeLoop, 600);
 }
-
-/* ── 9. SMOOTH ACTIVE STYLE for nav ── */
-const style = document.createElement('style');
-style.textContent = `.nav-links a.active { color: var(--primary) !important; font-weight: 600 !important; }`;
-document.head.appendChild(style);
