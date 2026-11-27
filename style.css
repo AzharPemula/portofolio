@@ -1,7 +1,14 @@
 /* ═══════════════════════════════════════════════════════════════
-   CLEAN PREMIUM LIGHT — Muhammad Azhar Firdaus | Web Developer
+   CLEAN PREMIUM LIGHT v6.0 — Muhammad Azhar Firdaus
    Aesthetic: Fresh, Breathable, Minimalist, Elegant & Professional
-   Typography: Plus Jakarta Sans / Inter
+   Features:
+    - 3D Card Tilt & Micro-reflections
+    - Scroll Progress Indicator Bar
+    - Animated Number Counters
+    - Project Category Filter Tabs with Smooth Transitions
+    - Digital CV / Resume Interactive Modal
+    - 1-Click Copy Email with Modern Toast Notification
+    - Back-to-Top Floating Pill
 ═══════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -55,7 +62,7 @@
   --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* SOFT MUTED SLATE DARK (Calm & comfortable to read) */
+/* SOFT MUTED SLATE DARK */
 [data-theme="dark"] {
   --bg-page: #0b0f19;
   --bg-surface: #111827;
@@ -120,6 +127,85 @@ img {
 }
 
 /* ════════════════════════════════════════
+   SCROLL PROGRESS BAR (FEATURE 1)
+════════════════════════════════════════ */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3.5px;
+  background: var(--gradient-primary);
+  z-index: 10001;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
+}
+
+/* ════════════════════════════════════════
+   TOAST NOTIFICATION (FEATURE 2)
+════════════════════════════════════════ */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10002;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--text-main);
+  color: var(--bg-surface);
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  animation: toastSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: auto;
+}
+
+@keyframes toastSlideUp {
+  from { opacity: 0; transform: translateY(15px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast.fade-out {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s ease;
+}
+
+/* ════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS
+════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════════
+   3D TILT EFFECT CARDS
+════════════════════════════════════════ */
+.tilt-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* ════════════════════════════════════════
    LAYOUT & CONTAINER
 ════════════════════════════════════════ */
 .container {
@@ -176,7 +262,7 @@ img {
 }
 
 /* ════════════════════════════════════════
-   NAVBAR (CLEAN FLOATING PILL)
+   NAVBAR (FLOATING PILL)
 ════════════════════════════════════════ */
 .navbar {
   position: fixed;
@@ -191,7 +277,7 @@ img {
 .nav-pill-container {
   max-width: 980px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
@@ -206,7 +292,7 @@ img {
 }
 
 [data-theme="dark"] .nav-pill-container {
-  background: rgba(21, 29, 48, 0.85);
+  background: rgba(21, 29, 48, 0.88);
 }
 
 .nav-brand {
@@ -302,7 +388,7 @@ img {
 }
 
 /* ════════════════════════════════════════
-   HERO SECTION (CLEAN & ELEGANT)
+   HERO SECTION
 ════════════════════════════════════════ */
 .hero {
   padding-top: 7.5rem;
@@ -427,18 +513,44 @@ img {
   transform: translateY(-2px);
 }
 
-.hero-socials {
+.hero-quick-meta {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+  flex-wrap: wrap;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
 }
 
-.hero-socials span {
+.copy-email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
   font-size: 0.85rem;
-  color: var(--text-light);
-  margin-right: 0.4rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.copy-email-chip i {
+  color: var(--primary);
+}
+
+.copy-email-chip:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.hero-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .hero-socials a {
@@ -569,7 +681,7 @@ img {
 }
 
 /* ════════════════════════════════════════
-   SKILLS SECTION (CLEAN & ORGANIZED)
+   SKILLS SECTION
 ════════════════════════════════════════ */
 .skills-grid {
   display: grid;
@@ -584,12 +696,6 @@ img {
   padding: 2.25rem 1.75rem;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-}
-
-.skill-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-subtle);
-  box-shadow: var(--shadow-md);
 }
 
 .skill-card-head {
@@ -677,8 +783,41 @@ img {
 }
 
 /* ════════════════════════════════════════
-   PROJECTS SECTION (CALM & BEAUTIFUL)
+   PROJECTS SECTION & FILTER TABS (FEATURE 3)
 ════════════════════════════════════════ */
+.project-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2.75rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 0.45rem 1.2rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-pill:hover {
+  color: var(--primary);
+  border-color: var(--border-subtle);
+}
+
+.filter-pill.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -691,15 +830,22 @@ img {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  transition: all 0.35s ease;
   display: flex;
   flex-direction: column;
 }
 
-.project-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--border-subtle);
-  box-shadow: var(--shadow-hover);
+.project-card.hidden {
+  display: none;
+}
+
+.project-card.fade-in {
+  animation: projectFadeIn 0.4s ease forwards;
+}
+
+@keyframes projectFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .project-banner {
@@ -810,6 +956,170 @@ img {
 .btn-repo:hover {
   color: var(--text-main);
   transform: translateY(-2px);
+}
+
+/* ════════════════════════════════════════
+   DIGITAL CV / RESUME MODAL (FEATURE 4)
+════════════════════════════════════════ */
+.cv-paper {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  box-shadow: var(--shadow-hover);
+  overflow: hidden;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cv-header-bar {
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.cv-body-scroll {
+  padding: 2.25rem;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+.cv-profile-header {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.cv-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.cv-role {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.cv-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cv-contact-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cv-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cv-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.cv-item {
+  margin-bottom: 1rem;
+}
+
+.cv-item-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  justify-content: space-between;
+}
+
+.cv-item-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.cv-item-subtitle {
+  font-size: 0.88rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.cv-item ul {
+  padding-left: 1.25rem;
+  font-size: 0.88rem;
+  color: var(--text-body);
+}
+
+.cv-item ul li {
+  list-style-type: disc;
+  margin-bottom: 0.25rem;
+}
+
+/* ════════════════════════════════════════
+   BACK TO TOP (FEATURE 5)
+════════════════════════════════════════ */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: var(--transition);
+  z-index: 999;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
 
 /* ════════════════════════════════════════
@@ -960,7 +1270,7 @@ img {
 }
 
 /* ════════════════════════════════════════
-   JOURNEY & TIMELINE (CLEAN & MINIMAL)
+   JOURNEY & TIMELINE
 ════════════════════════════════════════ */
 .journey-grid {
   display: grid;
@@ -1036,7 +1346,7 @@ img {
 }
 
 /* ════════════════════════════════════════
-   CONTACT SECTION (DIRECT WHATSAPP & FORM)
+   CONTACT SECTION
 ════════════════════════════════════════ */
 .contact-grid {
   display: grid;
@@ -1188,7 +1498,7 @@ img {
 }
 
 /* ════════════════════════════════════════
-   FOOTER (MINIMAL & BALANCED)
+   FOOTER
 ════════════════════════════════════════ */
 .footer {
   border-top: 1px solid var(--border);
@@ -1232,7 +1542,7 @@ img {
   .hero-content { max-width: 100%; }
   .hero-subtitle { justify-content: center; }
   .hero-actions { justify-content: center; }
-  .hero-socials { justify-content: center; }
+  .hero-quick-meta { justify-content: center; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .skills-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: repeat(2, 1fr); }

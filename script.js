@@ -1,14 +1,159 @@
 /* ═══════════════════════════════════════════════════════════════
-   CLEAN PREMIUM LIGHT — script.js
+   CLEAN PREMIUM LIGHT v6.0 — script.js
    Muhammad Azhar Firdaus | Web Developer
 ═══════════════════════════════════════════════════════════════ */
 
-/* ── 1. THEME SWITCHER ENGINE (Default: Light Mode) ── */
+/* ── 1. SCROLL PROGRESS BAR (FEATURE) ── */
+const progressBar = document.getElementById('scrollProgressBar');
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height    = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled  = (winScroll / height) * 100;
+
+  if (progressBar) {
+    progressBar.style.width = `${scrolled}%`;
+  }
+
+  // Back to top visibility
+  if (backToTopBtn) {
+    if (winScroll > 350) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── 2. TOAST NOTIFICATION ENGINE (FEATURE) ── */
+function showToast(message, icon = '✓') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3200);
+}
+
+function copyEmailToClipboard(email) {
+  navigator.clipboard.writeText(email).then(() => {
+    showToast(`Email ${email} berhasil disalin!`, '📋');
+  }).catch(() => {
+    showToast('Gagal menyalin email.', '⚠️');
+  });
+}
+
+/* ── 3. SCROLL REVEAL ANIMATIONS ── */
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+revealElements.forEach(el => revealObserver.observe(el));
+
+/* ── 4. 3D CARD TILT INTERACTIVITY ── */
+const tiltCards = document.querySelectorAll('.tilt-card');
+
+tiltCards.forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect   = card.getBoundingClientRect();
+    const x      = e.clientX - rect.left;
+    const y      = e.clientY - rect.top;
+    const midX   = rect.width / 2;
+    const midY   = rect.height / 2;
+    const rotX   = ((y - midY) / midY) * -5;
+    const rotY   = ((x - midX) / midX) * 5;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  });
+});
+
+/* ── 5. ANIMATED NUMBER COUNTERS ── */
+const counterNumbers = document.querySelectorAll('.counter-num');
+let countersTriggered = false;
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !countersTriggered) {
+      countersTriggered = true;
+      counterNumbers.forEach(counter => {
+        const target   = +counter.getAttribute('data-target');
+        const duration = 1500;
+        const start    = 0;
+        const startTime = performance.now();
+
+        function updateCounter(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const current = Math.floor(progress * (target - start) + start);
+          counter.textContent = current;
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target;
+          }
+        }
+        requestAnimationFrame(updateCounter);
+      });
+      counterObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+
+const statsSection = document.getElementById('about');
+if (statsSection) counterObserver.observe(statsSection);
+
+/* ── 6. PROJECT CATEGORY FILTER (FEATURE) ── */
+const filterPills = document.querySelectorAll('.filter-pill');
+const projectCards = document.querySelectorAll('#projectsGrid .project-card');
+
+filterPills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    filterPills.forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+
+    const filter = pill.getAttribute('data-filter');
+
+    projectCards.forEach(card => {
+      const cardCategory = card.getAttribute('data-category');
+      if (filter === 'all' || cardCategory === filter) {
+        card.classList.remove('hidden');
+        card.classList.remove('fade-in');
+        void card.offsetWidth; // trigger reflow
+        card.classList.add('fade-in');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+});
+
+/* ── 7. THEME SWITCHER ENGINE ── */
 const themeToggleBtn = document.getElementById('themeToggleBtn');
 const themeIcon      = document.getElementById('themeIcon');
 const htmlRoot       = document.documentElement;
 
-// Initialize theme from storage or default to 'light'
 const savedTheme = localStorage.getItem('azhar_clean_theme') || 'light';
 applyTheme(savedTheme);
 
@@ -32,89 +177,31 @@ if (themeToggleBtn) {
     const currentTheme = htmlRoot.getAttribute('data-theme') || 'light';
     const nextTheme    = currentTheme === 'light' ? 'dark' : 'light';
     applyTheme(nextTheme);
+    showToast(`Mode ${nextTheme === 'light' ? 'Terang' : 'Gelap'} diaktifkan`, nextTheme === 'light' ? '☀️' : '🌙');
   });
 }
 
-/* ── 2. MOBILE NAVIGATION ── */
-const navToggle = document.getElementById('navToggle');
-const navLinks  = document.getElementById('navLinks');
+/* ── 8. DIGITAL CV / RESUME MODAL (FEATURE) ── */
+const cvModalBackdrop = document.getElementById('cvModalBackdrop');
 
-if (navToggle && navLinks) {
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('open'));
-  });
-}
-
-/* ── 3. ACTIVE NAV HIGHLIGHTER ── */
-const sections = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
-
-window.addEventListener('scroll', () => {
-  let currentId = '';
-  sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 150) {
-      currentId = sec.getAttribute('id');
-    }
-  });
-
-  navAnchors.forEach(a => {
-    a.classList.remove('active');
-    if (a.getAttribute('href') === `#${currentId}`) {
-      a.classList.add('active');
-    }
-  });
-});
-
-/* ── 4. ANIMATED ROLE TYPEWRITER ── */
-const roles = [
-  'Web Developer',
-  'Frontend Engineer',
-  'UI/UX Enthusiast',
-  'Creative Problem Solver'
-];
-const typingRole = document.getElementById('typingRole');
-let rIdx = 0, cIdx = 0, isDeleting = false;
-
-function loopTypewriter() {
-  if (!typingRole) return;
-  const currentText = roles[rIdx];
-
-  if (!isDeleting) {
-    typingRole.textContent = currentText.slice(0, ++cIdx);
-    if (cIdx === currentText.length) {
-      isDeleting = true;
-      setTimeout(loopTypewriter, 2200);
-      return;
-    }
-  } else {
-    typingRole.textContent = currentText.slice(0, --cIdx);
-    if (cIdx === 0) {
-      isDeleting = false;
-      rIdx = (rIdx + 1) % roles.length;
-    }
+function openCvModal() {
+  if (cvModalBackdrop) {
+    cvModalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
-  setTimeout(loopTypewriter, isDeleting ? 40 : 80);
 }
 
-if (typingRole) {
-  setTimeout(loopTypewriter, 500);
+function closeCvModal(e) {
+  if (e && e.target !== cvModalBackdrop && !e.target.closest('.modal-close')) {
+    return;
+  }
+  if (cvModalBackdrop) {
+    cvModalBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 
-/* ── 5. SKILL METER ANIMATION ── */
-const skillFills = document.querySelectorAll('.skill-fill');
-const skillObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.width = `${entry.target.dataset.width}%`;
-      skillObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.25 });
-
-skillFills.forEach(bar => skillObserver.observe(bar));
-
-/* ── 6. PROJECT DETAIL SPEC MODAL ── */
+/* ── 9. PROJECT SPECIFICATION MODAL ── */
 const PROJECT_DATA = {
   ecommerce: {
     tag: 'Web Application // E-Commerce',
@@ -223,13 +310,19 @@ function closeProjectModal(e) {
   }
 }
 
+// Global Escape Key to close any open modal
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modalBackdrop && modalBackdrop.classList.contains('active')) {
-    closeProjectModal();
+  if (e.key === 'Escape') {
+    if (cvModalBackdrop && cvModalBackdrop.classList.contains('active')) {
+      closeCvModal();
+    }
+    if (modalBackdrop && modalBackdrop.classList.contains('active')) {
+      closeProjectModal();
+    }
   }
 });
 
-/* ── 7. DIRECT WHATSAPP FORM SUBMISSION ── */
+/* ── 10. DIRECT WHATSAPP FORM SUBMISSION ── */
 function handleDirectSubmit(e) {
   e.preventDefault();
 
@@ -246,5 +339,65 @@ function handleDirectSubmit(e) {
 
   const waUrl = `https://wa.me/6281287372759?text=${encodeURIComponent(formattedMsg)}`;
   window.open(waUrl, '_blank');
+  showToast('Membuka WhatsApp...', '💬');
   e.target.reset();
+}
+
+/* ── 11. ANIMATED ROLE TYPEWRITER & SKILL METER ── */
+const roles = [
+  'Web Developer',
+  'Frontend Engineer',
+  'UI/UX Enthusiast',
+  'Creative Problem Solver'
+];
+const typingRole = document.getElementById('typingRole');
+let rIdx = 0, cIdx = 0, isDeleting = false;
+
+function loopTypewriter() {
+  if (!typingRole) return;
+  const currentText = roles[rIdx];
+
+  if (!isDeleting) {
+    typingRole.textContent = currentText.slice(0, ++cIdx);
+    if (cIdx === currentText.length) {
+      isDeleting = true;
+      setTimeout(loopTypewriter, 2200);
+      return;
+    }
+  } else {
+    typingRole.textContent = currentText.slice(0, --cIdx);
+    if (cIdx === 0) {
+      isDeleting = false;
+      rIdx = (rIdx + 1) % roles.length;
+    }
+  }
+  setTimeout(loopTypewriter, isDeleting ? 40 : 80);
+}
+
+if (typingRole) {
+  setTimeout(loopTypewriter, 500);
+}
+
+// Skill Fill Animation
+const skillFills = document.querySelectorAll('.skill-fill');
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.width = `${entry.target.dataset.width}%`;
+      skillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.25 });
+
+skillFills.forEach(bar => skillObserver.observe(bar));
+
+// Mobile Navigation Toggle
+const navToggle = document.getElementById('navToggle');
+const navLinks  = document.getElementById('navLinks');
+
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
 }
