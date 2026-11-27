@@ -1549,7 +1549,7 @@ img {
   .contact-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .nav-links { display: none; }
   .nav-toggle { display: block; }
   
@@ -1567,6 +1567,7 @@ img {
     gap: 0.6rem;
     box-shadow: var(--shadow-lg);
   }
+}
   
   .projects-grid { grid-template-columns: 1fr; }
   .journey-grid { grid-template-columns: 1fr; }
