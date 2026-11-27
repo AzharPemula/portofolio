@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muhammad Azhar Firdaus — Web Developer Portfolio</title>
-  <link rel="stylesheet" href="style.css?v=6.0" />
+  <title>Muhammad Azhar Firdaus — Web Developer &amp; Studio</title>
+  <link rel="stylesheet" href="style.css?v=7.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
@@ -18,30 +18,30 @@
   <!-- ═══ FEATURE: TOAST NOTIFICATION CONTAINER ═══ -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- ═══ FLOATING NAVBAR ═══ -->
+  <!-- ═══ FLOATING WARM PILL NAVBAR ═══ -->
   <header class="navbar">
     <div class="nav-pill-container">
       <a href="#hero" class="nav-brand">
-        Azhar<span>.dev</span>
+        Azhar Firdaus <span>DEV</span>
       </a>
 
       <nav class="nav-links" id="navLinks">
         <a href="#hero" class="active">Beranda</a>
         <a href="#about">Tentang</a>
         <a href="#skills">Keahlian</a>
-        <a href="#projects">Proyek</a>
+        <a href="#projects">Karya</a>
         <a href="#journey">Pengalaman</a>
-        <a href="javascript:void(0)" onclick="openCvModal()">Lihat CV</a>
+        <a href="javascript:void(0)" onclick="openCvModal()">Resume / CV</a>
         <a href="#contact">Kontak</a>
       </nav>
 
       <div class="nav-actions">
         <!-- Theme Toggle -->
-        <button class="theme-btn" id="themeToggleBtn" aria-label="Ganti Tema Gelap/Terang" title="Ganti Tema">
+        <button class="theme-btn" id="themeToggleBtn" aria-label="Ganti Tema Kopi / Dark Roast" title="Ganti Tema">
           <i class="fas fa-moon" id="themeIcon"></i>
         </button>
 
-        <a href="#contact" class="btn-nav-cta">Hubungi</a>
+        <a href="#contact" class="btn-nav-cta">Konsultasi</a>
 
         <button class="nav-toggle" id="navToggle" aria-label="Buka Menu">
           <i class="fas fa-bars"></i>
@@ -50,45 +50,46 @@
     </div>
   </header>
 
-  <!-- ═══ HERO SECTION ═══ -->
+  <!-- ═══ HERO SECTION (WARM EDITORIAL) ═══ -->
   <section class="section hero" id="hero">
     <div class="container">
       <div class="hero-grid">
 
         <!-- Left: Intro & Pitch -->
         <div class="hero-content reveal">
-          <div class="status-indicator">
+          <div class="status-badge">
             <span class="status-dot"></span>
-            <span>Tersedia untuk Pekerjaan &amp; Proyek Baru</span>
+            <span>Tersedia untuk Rekrutmen &amp; Proyek Baru</span>
           </div>
 
+          <div class="hero-greeting">Halo &amp; Selamat Datang —</div>
           <h1 class="hero-title">
-            Halo, saya<br/>
-            <span class="gradient-text">Azhar Firdaus</span>
+            Muhammad<br/>
+            <span class="editorial-italic">Azhar Firdaus</span>
           </h1>
 
           <div class="hero-subtitle">
-            <span>Seorang </span>
-            <span id="typingRole">Web Developer</span>
-            <span class="cursor-blink">|</span>
+            <span>Spesialisasi: </span>
+            <strong id="typingRole">Web Developer</strong>
+            <span class="cursor-blink">_</span>
           </div>
 
           <p class="hero-desc">
-            Fresh graduate web developer yang berdedikasi membangun aplikasi web modern, responsif, dan berperforma tinggi dengan kode yang bersih dan terstruktur.
+            Fresh graduate web engineer yang memadukan keindahan antarmuka pengguna dengan performa arsitektur kode modern. Berfokus pada pengembangan aplikasi web yang cepat, responsif, dan mudah digunakan.
           </p>
 
           <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">
-              <span>Lihat Hasil Karya</span>
+              <span>Jelajahi Karya Pilihan</span>
               <i class="fas fa-arrow-down"></i>
             </a>
             <button class="btn btn-outline" onclick="openCvModal()">
               <i class="far fa-file-alt"></i>
-              <span>Lihat CV / Resume</span>
+              <span>Ringkasan CV</span>
             </button>
             <a href="https://wa.me/6281287372759" target="_blank" rel="noopener" class="btn btn-outline">
               <i class="fab fa-whatsapp" style="color: #25d366; font-size: 1.1rem;"></i>
-              <span>WhatsApp</span>
+              <span>Chat WhatsApp</span>
             </a>
           </div>
 
@@ -108,22 +109,21 @@
           </div>
         </div>
 
-        <!-- Right: Clean Rounded Portrait Frame -->
+        <!-- Right: Magazine Editorial Portrait -->
         <div class="hero-visual reveal">
-          <div class="avatar-frame">
-            <div class="avatar-backdrop"></div>
-            <div class="avatar-circle">
-              <img src="profile.jpg" alt="Muhammad Azhar Firdaus" class="avatar-img" />
+          <div class="avatar-editorial-pod">
+            <div class="avatar-editorial-frame">
+              <img src="profile.jpg" alt="Muhammad Azhar Firdaus" class="avatar-editorial-img" />
             </div>
 
             <div class="floating-pill pill-1">
-              <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
+              <i class="fas fa-graduation-cap" style="color: var(--accent-caramel);"></i>
               <span>Fresh Graduate</span>
             </div>
 
             <div class="floating-pill pill-2">
-              <i class="fas fa-code" style="color: var(--accent-emerald);"></i>
-              <span>Clean Code</span>
+              <i class="fas fa-feather-alt" style="color: var(--accent-olive);"></i>
+              <span>Clean Architecture</span>
             </div>
           </div>
         </div>
@@ -156,14 +156,14 @@
     </div>
   </section>
 
-  <!-- ═══ SKILLS SECTION ═══ -->
+  <!-- ═══ SKILLS SECTION (EDITORIAL & ORGANIZED) ═══ -->
   <section class="section" id="skills">
     <div class="container">
       <div class="section-head reveal">
-        <div class="pill-badge">Keahlian Teknis</div>
-        <h2 class="section-title">Teknologi yang Saya Kuasai</h2>
+        <div class="editorial-tag">Arsenal &amp; Keahlian</div>
+        <h2 class="section-title">Fondasi <span class="editorial-italic">Teknologi</span></h2>
         <p class="section-subtitle">
-          Kombinasi bahasa pemrograman, framework, dan peralatan yang saya gunakan dalam pengembangan software modern.
+          Kombinasi bahasa pemrograman, framework, dan peralatan yang saya andalkan dalam mewujudkan aplikasi digital berkualitas.
         </p>
       </div>
 
@@ -172,7 +172,7 @@
         <div class="skill-card tilt-card reveal">
           <div class="skill-card-head">
             <div class="skill-icon-box"><i class="fas fa-laptop-code"></i></div>
-            <h3>Frontend Development</h3>
+            <h3>Frontend Craft</h3>
           </div>
           <div class="skill-bar-list">
             <div class="skill-bar-item">
@@ -198,7 +198,7 @@
         <div class="skill-card tilt-card reveal">
           <div class="skill-card-head">
             <div class="skill-icon-box"><i class="fas fa-server"></i></div>
-            <h3>Backend &amp; Database</h3>
+            <h3>Backend &amp; Basis Data</h3>
           </div>
           <div class="skill-bar-list">
             <div class="skill-bar-item">
@@ -224,7 +224,7 @@
         <div class="skill-card tilt-card reveal">
           <div class="skill-card-head">
             <div class="skill-icon-box"><i class="fas fa-toolbox"></i></div>
-            <h3>Tools &amp; Ekosistem</h3>
+            <h3>Ekosistem &amp; Workflow</h3>
           </div>
           <div class="skill-pills-wrap">
             <span class="skill-tag"><i class="fab fa-git-alt"></i> Git &amp; GitHub</span>
@@ -235,7 +235,7 @@
             <span class="skill-tag"><i class="fas fa-cloud"></i> Vercel</span>
             <span class="skill-tag"><i class="fab fa-npm"></i> NPM / PNPM</span>
             <span class="skill-tag"><i class="fas fa-bolt"></i> Vite</span>
-            <span class="skill-tag"><i class="fas fa-sync"></i> CI/CD Workflow</span>
+            <span class="skill-tag"><i class="fas fa-sync"></i> CI/CD Pipeline</span>
           </div>
         </div>
       </div>
@@ -243,13 +243,13 @@
   </section>
 
   <!-- ═══ FEATURED PROJECTS & CATEGORY FILTER ═══ -->
-  <section class="section" id="projects" style="background: var(--bg-subtle);">
+  <section class="section" id="projects" style="background: var(--bg-cream);">
     <div class="container">
       <div class="section-head reveal">
-        <div class="pill-badge">Portofolio Pilihan</div>
-        <h2 class="section-title">Karya &amp; Proyek Unggulan</h2>
+        <div class="editorial-tag">Portofolio Kurasi</div>
+        <h2 class="section-title">Karya &amp; <span class="editorial-italic">Proyek Terpilih</span></h2>
         <p class="section-subtitle">
-          Beberapa proyek nyata yang telah saya rancang dan bangun, mengutamakan performa tinggi dan pengalaman pengguna yang nyaman.
+          Eksplorasi proyek nyata yang menggabungkan estetika tampilan, arsitektur kode bersih, dan pengalaman pengguna yang nyaman.
         </p>
       </div>
 
@@ -265,13 +265,13 @@
 
         <!-- Proyek 1 -->
         <div class="project-card tilt-card reveal" data-category="fullstack">
-          <div class="project-banner" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+          <div class="project-banner" style="background: linear-gradient(135deg, #3d2b1f, #634835);">
             <i class="fas fa-shopping-bag project-icon"></i>
-            <span class="project-type-badge">Fullstack Web App</span>
+            <span class="project-type-badge">Fullstack Platform</span>
           </div>
           <div class="project-body">
             <h3>Modern E-Commerce Platform</h3>
-            <p>Platform belanja daring lengkap dengan katalog produk, keranjang belanja interaktif, payment checkout, dan admin panel.</p>
+            <p>Platform belanja online menyeluruh dengan sistem katalog produk terstruktur, shopping cart reaktif, payment checkout, dan dashboard admin.</p>
             <div class="project-tags">
               <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span>
             </div>
@@ -289,13 +289,13 @@
 
         <!-- Proyek 2 -->
         <div class="project-card tilt-card reveal" data-category="fullstack">
-          <div class="project-banner" style="background: linear-gradient(135deg, #10b981, #047857);">
+          <div class="project-banner" style="background: linear-gradient(135deg, #2d4536, #43624e);">
             <i class="fas fa-tasks project-icon"></i>
-            <span class="project-type-badge">Web Platform</span>
+            <span class="project-type-badge">Productivity Hub</span>
           </div>
           <div class="project-body">
             <h3>Productivity Kanban Hub</h3>
-            <p>Aplikasi manajemen tugas tim dengan Kanban board interaktif, pelacakan progres sprint, dan sinkronisasi status waktu nyata.</p>
+            <p>Aplikasi manajemen alur kerja tim dengan Kanban board interaktif, pelacak progres sprint, dan sinkronisasi status waktu nyata.</p>
             <div class="project-tags">
               <span>Vue.js</span><span>Laravel</span><span>MySQL</span>
             </div>
@@ -313,9 +313,9 @@
 
         <!-- Proyek 3 -->
         <div class="project-card tilt-card reveal" data-category="api">
-          <div class="project-banner" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+          <div class="project-banner" style="background: linear-gradient(135deg, #5c3a21, #85532f);">
             <i class="fas fa-network-wired project-icon"></i>
-            <span class="project-type-badge">Backend Service</span>
+            <span class="project-type-badge">Backend Gateway</span>
           </div>
           <div class="project-body">
             <h3>Scalable Micro-API Gateway</h3>
@@ -337,9 +337,9 @@
 
         <!-- Proyek 4 -->
         <div class="project-card tilt-card reveal" data-category="fullstack">
-          <div class="project-banner" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
+          <div class="project-banner" style="background: linear-gradient(135deg, #2c3a47, #475a6c);">
             <i class="fas fa-chart-line project-icon"></i>
-            <span class="project-type-badge">Data Dashboard</span>
+            <span class="project-type-badge">Analytics Dashboard</span>
           </div>
           <div class="project-body">
             <h3>Real-Time Metrics Dashboard</h3>
@@ -361,9 +361,9 @@
 
         <!-- Proyek 5 -->
         <div class="project-card tilt-card reveal" data-category="mobile">
-          <div class="project-banner" style="background: linear-gradient(135deg, #f97316, #c2410c);">
+          <div class="project-banner" style="background: linear-gradient(135deg, #7c4424, #b06233);">
             <i class="fas fa-wallet project-icon"></i>
-            <span class="project-type-badge">Mobile App</span>
+            <span class="project-type-badge">Mobile Application</span>
           </div>
           <div class="project-body">
             <h3>Smart Financial Tracker</h3>
@@ -391,8 +391,8 @@
   <div class="modal-backdrop" id="cvModalBackdrop" onclick="closeCvModal(event)">
     <div class="cv-paper" onclick="event.stopPropagation()">
       <div class="cv-header-bar">
-        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">
-          <i class="far fa-file-alt"></i> Digital Curriculum Vitae
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--accent-caramel); text-transform: uppercase;">
+          <i class="far fa-file-alt"></i> Curriculum Vitae — Muhammad Azhar Firdaus
         </span>
         <div style="display: flex; gap: 0.6rem; align-items: center;">
           <button class="btn-spec" onclick="window.print()" title="Cetak / Unduh PDF">
@@ -409,7 +409,7 @@
         <div class="cv-profile-header">
           <div>
             <h1 class="cv-name">Muhammad Azhar Firdaus</h1>
-            <div class="cv-role">Web Developer &amp; Tech Enthusiast</div>
+            <div class="cv-role">Web Developer &amp; Software Builder</div>
             <div class="cv-contact-row">
               <span><i class="fas fa-map-marker-alt"></i> Banten, Indonesia</span>
               <span><i class="fas fa-envelope"></i> azharxbd@gmail.com</span>
@@ -420,19 +420,19 @@
         </div>
 
         <div class="cv-section-title">Ringkasan Profesional</div>
-        <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.7;">
+        <p style="font-size: 0.95rem; color: var(--text-mocha); line-height: 1.75;">
           Fresh graduate pengembang web dengan semangat belajar tinggi dan fokus pada arsitektur web modern. Terampil dalam membangun antarmuka web reaktif menggunakan React.js, Tailwind CSS, serta integrasi backend RESTful API berbasis Node.js dan PHP/Laravel. Selalu berkomitmen pada penulisan kode yang bersih, modular, dan berorientasi pada kepuasan pengguna.
         </p>
 
         <div class="cv-section-title">Keahlian Teknis</div>
-        <div style="font-size: 0.9rem; color: var(--text-body); display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <div style="font-size: 0.92rem; color: var(--text-mocha); display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
           <div><strong>Frontend:</strong> HTML5, CSS3, JavaScript ES6+, React.js, Tailwind CSS, Vue.js</div>
           <div><strong>Backend:</strong> Node.js, Express.js, PHP, Laravel, REST APIs</div>
           <div><strong>Database:</strong> MySQL, PostgreSQL, MongoDB, Firebase</div>
           <div><strong>Tools &amp; Workflow:</strong> Git, GitHub, VS Code, Postman, Linux, Vercel</div>
         </div>
 
-        <div class="cv-section-title">Proyek Unggulan</div>
+        <div class="cv-section-title">Pengalaman Proyek Unggulan</div>
         <div class="cv-item">
           <div class="cv-item-title">
             <span>Modern E-Commerce Engine Platform</span>
@@ -464,7 +464,7 @@
             <span>Studi &amp; Pelatihan Intensif Web Development</span>
             <span class="cv-item-date">2023 — 2024</span>
           </div>
-          <div class="cv-item-subtitle">Status: Fresh Graduate (Siap Bekerja)</div>
+          <div class="cv-item-subtitle">Status: Fresh Graduate (Siap Bekerja Penuh Waktu)</div>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.25rem;">
             Menyelesaikan kurikulum intensif algoritma pemrograman, fullstack web architecture, dan kolaborasi proyek berbasis Git/GitHub.
           </p>
@@ -509,9 +509,9 @@
   <section class="section" id="journey">
     <div class="container">
       <div class="section-head reveal">
-        <div class="pill-badge">Rekam Jejak</div>
-        <h2 class="section-title">Perjalanan &amp; Pengalaman</h2>
-        <p class="section-subtitle">Dedikasi pembelajaran dan pengalaman nyata dalam membangun solusi digital.</p>
+        <div class="editorial-tag">Kronologi Karir</div>
+        <h2 class="section-title">Jejak Langkah &amp; <span class="editorial-italic">Dedikasi</span></h2>
+        <p class="section-subtitle">Pengalaman nyata dan dedikasi pembelajaran dalam membangun ekosistem software modern.</p>
       </div>
 
       <div class="journey-grid">
@@ -519,7 +519,7 @@
           <div class="journey-header">
             <div>
               <h3>Junior Web Developer / Freelance</h3>
-              <div class="journey-place">Proyek Independen &amp; Komersial</div>
+              <div class="journey-place">Proyek Independen &amp; Klien</div>
             </div>
             <span class="journey-period">2024 — Sekarang</span>
           </div>
@@ -549,13 +549,13 @@
   </section>
 
   <!-- ═══ CONTACT SECTION ═══ -->
-  <section class="section" id="contact" style="background: var(--bg-subtle);">
+  <section class="section" id="contact" style="background: var(--bg-cream);">
     <div class="container">
       <div class="section-head reveal">
-        <div class="pill-badge">Hubungi Saya</div>
-        <h2 class="section-title">Mari Berkolaborasi</h2>
+        <div class="editorial-tag">Saluran Komunikasi</div>
+        <h2 class="section-title">Mari <span class="editorial-italic">Berkolaborasi</span></h2>
         <p class="section-subtitle">
-          Punya ide proyek atau peluang kerja sama yang menarik? Jangan ragu untuk mengirim pesan, saya akan segera merespons.
+          Punya ide proyek, penawaran kerja sama, atau ingin berdiskusi santai seputar teknologi? Silakan hubungi saya melalui jalur di bawah.
         </p>
       </div>
 
@@ -563,7 +563,7 @@
         <!-- Sidebar Info -->
         <div class="contact-card-sidebar tilt-card reveal">
           <div>
-            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Kontak Langsung</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; color: var(--text-espresso); margin-bottom: 0.35rem;">Kontak Langsung</h3>
             <p style="color: var(--text-muted); font-size: 0.92rem;">Pilih jalur tercepat untuk menghubungi saya:</p>
           </div>
 
@@ -625,7 +625,7 @@
               <i class="fab fa-whatsapp" style="font-size: 1.15rem;"></i>
               <span>Kirim Pesan via WhatsApp</span>
             </button>
-            <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.85rem; text-align: center;">
+            <p style="font-size: 0.82rem; color: var(--text-light); margin-top: 0.85rem; text-align: center;">
               ⚡ Pesan otomatis tersusun rapi dan langsung membuka obrolan ke nomor WhatsApp Azhar Firdaus.
             </p>
           </form>
@@ -639,15 +639,15 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-logo">
-          Azhar<span>.dev</span>
+          Muhammad Azhar <span>Firdaus</span>
         </div>
-        <p>© 2026 Muhammad Azhar Firdaus. Dirancang dengan tampilan bersih, modern &amp; elegan.</p>
+        <p>© 2026 Muhammad Azhar Firdaus. Dirancang dengan sentuhan Warm Coffee &amp; Cream Editorial.</p>
         <div class="footer-links">
           <a href="#hero">Beranda</a>
           <a href="#about">Tentang</a>
           <a href="#skills">Keahlian</a>
-          <a href="#projects">Proyek</a>
-          <a href="javascript:void(0)" onclick="openCvModal()">Lihat CV</a>
+          <a href="#projects">Karya</a>
+          <a href="javascript:void(0)" onclick="openCvModal()">Resume</a>
           <a href="#contact">Kontak</a>
         </div>
       </div>
@@ -659,6 +659,6 @@
     <i class="fas fa-arrow-up"></i>
   </button>
 
-  <script src="script.js?v=6.0"></script>
+  <script src="script.js?v=7.0"></script>
 </body>
 </html>
